@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import { db } from "./conf/firebase";
-import { collection, query, where, onSnapshot } from "firebase/firestore";
-import Header from "./components/header";
-import TodoInput from "./components/todo-input";
-import Todos from "./components/todos";
-import TodoBottom from "./components/todo-bottom";
+import { collection, query, onSnapshot } from "firebase/firestore";
+import Header from "./components/Header";
+import TodoInput from "./components/TodoInput";
+import TodoBottom from "./components/TodoBottom";
+import Todos from "./components/Todos";
 
 export default function App() {
   const [todos, setTodos] = useState([]);
@@ -27,8 +27,8 @@ export default function App() {
     <div className="container">
       <Header />
       <TodoInput />
-      <Todos />
-      <TodoBottom />
+      <Todos todos={todos} />
+      <TodoBottom todos={todos} />
     </div>
   );
 }

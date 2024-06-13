@@ -3,7 +3,7 @@ import { collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { useState } from "react";
 
 export default function TodoInput() {
-  const [title, setTitle] = useState();
+  const [title, setTitle] = useState("");
 
   async function writeTodo(e) {
     e.preventDefault();
@@ -14,8 +14,8 @@ export default function TodoInput() {
       isDone: false,
       date: serverTimestamp(),
     };
-
     await setDoc(todoRef, data);
+    setTitle("");
   }
 
   return (
