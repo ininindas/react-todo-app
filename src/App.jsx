@@ -2,49 +2,33 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { db } from "./conf/firebase";
 import { collection, query, where, onSnapshot } from "firebase/firestore";
+import Header from "./components/header";
+import TodoInput from "./components/todo-input";
+import Todos from "./components/todos";
+import TodoBottom from "./components/todo-bottom";
 
 export default function App() {
-  const [todos, setTods] = useState([]);
+  const [todos, setTodos] = useState([]);
 
   useEffect(() => {
-    const q = query(collection(db, "notes"));
+    const q = query(collection(db, "todos"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const notes = [];
+      const todos = [];
       querySnapshot.forEach((doc) => {
-        notes.push(doc.data());
+        todos.push(doc.data());
       });
+      setTodos(todos);
     });
 
-    setTods(notes);
+    return () => unsubscribe;
   }, []);
 
   return (
-    <>
-      <div className="header">
-        <h1>🎃Todo</h1>
-        <button>정보</button>
-      </div>
-
-      <form action="">
-        <input type="text" placeholder="write a todo" />
-      </form>
-
-      <div className="todos">
-        {todos.map(() => {
-          <div className="todo_item" key={todos.id}>
-            <input type="checkbox" name="" id="" />
-            안녕하세요
-            <div className="btns">
-              <button>수정</button>
-              <button>삭제</button>
-            </div>
-          </div>;
-        })}
-      </div>
-
-      <div className="todo_botton">
-        <div></div>
-      </div>
-    </>
+    <div className="container">
+      <Header />
+      <TodoInput />
+      <Todos />
+      <TodoBottom />
+    </div>
   );
 }
